@@ -20,7 +20,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -70,10 +69,24 @@ public class TestBlock extends Block {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(worldIn, pos, state, player);
-
         worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 10.0f, Explosion.Mode.DESTROY);
 
+        try {
+            blockPos.remove(blockPos.indexOf(pos));
+        } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+            return;
+        }
+    }
+
+    @Override
+    public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
+        worldIn.createExplosion(worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ()), pos.getX(), pos.getY(), pos.getZ(), 10.0f, Explosion.Mode.DESTROY);
+
+        try {
+            blockPos.remove(blockPos.indexOf(pos));
+        } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+            return;
+        }
     }
 
     @Override
@@ -85,7 +98,6 @@ public class TestBlock extends Block {
                 blockPos.add(pos);
                 System.out.println("Added new pos at " + pos);
             }
-            super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         }
     }
 
@@ -97,7 +109,6 @@ public class TestBlock extends Block {
             if (Pos == pos)
                 blockPos.remove(blockPos.indexOf(Pos));
         }
-        super.onPlayerDestroy(worldIn, pos, state);
     }
 
     public static void Detonation(World worldIn, PlayerEntity player) {
@@ -116,6 +127,6 @@ public class TestBlock extends Block {
         System.out.println("Destroyed block at " + pos);
         System.out.println(player.getHeldItemMainhand());
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return ActionResultType.SUCCESS;
     }
 }
