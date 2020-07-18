@@ -20,6 +20,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -75,13 +76,6 @@ public class TestBlock extends Block {
 
     }
 
-    /*
-    @Override
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
-        world.createExplosion(world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ()), pos.getX(), pos.getY(), pos.getZ(), 10.0f, Explosion.Mode.DESTROY);
-    }
-    */
-
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 
@@ -121,6 +115,7 @@ public class TestBlock extends Block {
         player.inventory.addItemStackToInventory(Registries.TEST_BLOCK_ITEM.get().getDefaultInstance());
         System.out.println("Destroyed block at " + pos);
         System.out.println(player.getHeldItemMainhand());
+
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 }
