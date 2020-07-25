@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -21,6 +22,6 @@ public class TestItem extends Item {
         } else {
             System.out.println("No C4 to detonate");
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return new ActionResult<ItemStack>(ActionResultType.SUCCESS, ItemStack.EMPTY);
     }
 }
