@@ -1,6 +1,6 @@
 package com.divisionism.TestMod.blocks;
 
-import com.divisionism.TestMod.util.Multiblock;
+import com.divisionism.TestMod.util.IMultiblock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class TestMachine extends Block implements Multiblock {
+public class TestMachine extends Block implements IMultiblock {
 
     BlockPos bPos;
 

@@ -10,6 +10,7 @@ import com.divisionism.TestMod.items.TestItem;
 import com.divisionism.TestMod.items.TestProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
@@ -31,6 +32,7 @@ public class Registries {
     public static final RegistryObject<Item> TEST_PROJECTILE = ITEMS.register("test_projectile", TestProjectile::new);
     public static final RegistryObject<Item> SUPER_TOOL = ITEMS.register("super_tool", () -> new SuperTool(new Item.Properties().group(ItemGroup.MATERIALS)));
     public static final RegistryObject<Item> FLUID_CONTAINER = ITEMS.register("fluid_container", () -> new FluidContainer(new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> CUM_BUCKET = ITEMS.register("cum_bucket", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
 
     public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", TestBlock::new);
     public static final RegistryObject<Item> TEST_BLOCK_ITEM = ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK.get(), new Item.Properties().group(ItemGroup.MATERIALS)

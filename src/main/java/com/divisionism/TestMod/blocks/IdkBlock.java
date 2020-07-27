@@ -1,5 +1,7 @@
 package com.divisionism.TestMod.blocks;
 
+import com.divisionism.TestMod.util.Fluids;
+import com.divisionism.TestMod.util.IModFluidContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,7 +18,9 @@ import net.minecraft.world.IWorldReader;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class IdkBlock extends Block {
+public class IdkBlock extends Block implements IModFluidContainer {
+
+    Fluids[] fluids = Fluids.values();
 
     public IdkBlock(Properties properties) {
         super(properties);
@@ -40,5 +44,35 @@ public class IdkBlock extends Block {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent("Hello"));
+    }
+
+    @Override
+    public int maxCap() {
+        return 1000;
+    }
+
+    @Override
+    public int currentFill() {
+        return 1000;
+    }
+
+    @Override
+    public boolean canReceive() {
+        return false;
+    }
+
+    @Override
+    public boolean canOutput() {
+        return true;
+    }
+
+    @Override
+    public int fillRate() {
+        return 1000;
+    }
+
+    @Override
+    public int flowRate() {
+        return 1000;
     }
 }
