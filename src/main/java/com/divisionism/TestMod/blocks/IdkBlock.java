@@ -18,9 +18,9 @@ import net.minecraft.world.IWorldReader;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class IdkBlock extends Block implements IModFluidContainer {
+public class IdkBlock extends Block {
 
-    Fluids[] fluids = Fluids.values();
+    private Fluids fluid = Fluids.NONE;
 
     public IdkBlock(Properties properties) {
         super(properties);
@@ -44,35 +44,5 @@ public class IdkBlock extends Block implements IModFluidContainer {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent("Hello"));
-    }
-
-    @Override
-    public int maxCap() {
-        return 1000;
-    }
-
-    @Override
-    public int currentFill() {
-        return 1000;
-    }
-
-    @Override
-    public boolean canReceive() {
-        return false;
-    }
-
-    @Override
-    public boolean canOutput() {
-        return true;
-    }
-
-    @Override
-    public int fillRate() {
-        return 1000;
-    }
-
-    @Override
-    public int flowRate() {
-        return 1000;
     }
 }

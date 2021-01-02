@@ -10,9 +10,7 @@ public enum Fluids {
     Fluids(final int id) {
         this.id = id;
     }
-
-    private int id;
-
+    private final int id;
     public int getId() {
         return id;
     }

@@ -1,0 +1,12 @@
+{
+  "entity.bullet_shot": {
+    "category": "entity",
+    "subtitle": "entity.bullet_shot",
+    "sounds": [
+      {
+        "name": "test_mod:entity/entity.bullet_shot",
+        "stream": true
+      }
+    ]
+  }
+}

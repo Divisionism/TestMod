@@ -4,21 +4,13 @@ import com.divisionism.TestMod.util.Registries;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
@@ -68,65 +60,13 @@ public class TestBlock extends Block {
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 10.0f, Explosion.Mode.DESTROY);
-
-        try {
-            blockPos.remove(blockPos.indexOf(pos));
-        } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
-            return;
-        }
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
+    @Nullable
     @Override
-    public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
-        worldIn.createExplosion(worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ()), pos.getX(), pos.getY(), pos.getZ(), 10.0f, Explosion.Mode.DESTROY);
-
-        try {
-            blockPos.remove(blockPos.indexOf(pos));
-        } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
-            return;
-        }
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-
-        if (placer instanceof PlayerEntity) {
-
-            if (!blockPos.contains(pos)) {
-                blockPos.add(pos);
-                System.out.println("Added new pos at " + pos);
-            }
-        }
-    }
-
-    @Override
-    public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) {
-
-        for (BlockPos Pos : blockPos) {
-
-            if (Pos == pos)
-                blockPos.remove(blockPos.indexOf(Pos));
-        }
-    }
-
-    public static void Detonation(World worldIn, PlayerEntity player) {
-
-        for (BlockPos bp : blockPos) {
-            worldIn.createExplosion(player, bp.getX(), bp.getY(), bp.getZ(), 10.0f, Explosion.Mode.DESTROY);
-            worldIn.destroyBlock(bp, false);
-        }
-        blockPos.clear();
-    }
-
-    @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        worldIn.destroyBlock(pos, true);
-        player.inventory.addItemStackToInventory(Registries.TEST_BLOCK_ITEM.get().getDefaultInstance());
-        System.out.println("Destroyed block at " + pos);
-        System.out.println(player.getHeldItemMainhand());
-
-        return ActionResultType.SUCCESS;
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return Registries.TEST_BLOCK_TILE_ENTITY.get().create();
     }
 }
